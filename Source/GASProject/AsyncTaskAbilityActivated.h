@@ -21,21 +21,28 @@ class GASPROJECT_API UAsyncTaskAbilityActivated : public UBlueprintAsyncActionBa
 	GENERATED_BODY()
 	
 public:
+	// Called when an ability starts
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilityActivated OnAbilityBeginPin;
 
+	// Called when an ability ends
 	UPROPERTY(BlueprintAssignable)
 	FOnAbilityActivated OnAbilityEndPin;
 
 private:
+	// Reference to use the component's methods
 	UAbilitySystemComponent* ASC;
+
+	// Tags of the abilities the task will be listening
 	FGameplayTagContainer RegisteredAbilitiesTags;
 
 public:
+	// Blueprint node to activate the task
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "AsyncTasks")
 	static UAsyncTaskAbilityActivated* ListenForAbilityActivated(UAbilitySystemComponent* AbilitySystemComponent, FGameplayTagContainer AbilitiesTags);
 
 private:
+	// Internal methods to bind the events
 	void OnAbilityActivated(UGameplayAbility* GameplayAbility);
 	void OnAbilityEnd(const FAbilityEndedData& AbilityEbdedData);
 };
